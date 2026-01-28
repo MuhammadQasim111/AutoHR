@@ -45,9 +45,9 @@ const App: React.FC = () => {
       setPhase('FINALIZING');
       localStorage.setItem(cacheKey, JSON.stringify(evalResult));
       setResult(evalResult);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Evaluation error:", error);
-      alert("Autonomy Gate encountered a terminal error. Check console for details.");
+      alert(`Autonomy Gate Terminal Error: ${error.message || 'Unknown Failure'}`);
     } finally {
       setLoading(false);
       setPhase('IDLE');

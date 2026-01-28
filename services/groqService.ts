@@ -78,10 +78,18 @@ export async function evaluateCandidate(
         });
 
         const content = chatCompletion.choices[0]?.message?.content || "{}";
-        const result = JSON.parse(content) as EvaluationResult;
-        return result;
-    } catch (error) {
+        try {
+            return JSON.parse(content) as EvaluationResult;
+        } catch (parseError) {
+            console.error("Failed to parse AI response:", content);
+            throw new Error("AI engine produced an invalid data format. Please try again.");
+        }
+    } catch (error: any) {
         console.error("Groq eval error:", error);
+        // If it's our thrown "missing key" or "invalid format" error, re-throw it to App.tsx
+        if (error.message && (error.message.includes("API Key") || error.message.includes("AI engine"))) {
+            throw error;
+        }
         return {
             execution_score: 0.0,
             verdict: "FAIL" as any,
