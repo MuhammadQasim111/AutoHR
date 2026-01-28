@@ -1,0 +1,5 @@
+{
+  "name": "Autonomy Gate v3",
+  "description": "A brutalist, Tesla-style autonomous hiring gate that evaluates candidate ownership, failure recovery, and execution capacity using GitHub, Resume, and X signals.",
+  "requestFramePermissions": []
+}
